@@ -1,0 +1,765 @@
+<?php
+    include('connection.php');
+    session_start();
+
+?>
+
+
+<!DOCTYPE html>
+ <html>
+ <head>
+<title>Admin Login</title>
+<link rel="stylesheet" type="text/css" href="css/s1.css">
+
+ </head>
+
+ 
+ <body>
+
+<div id="full">
+
+    <div id="inner_full">
+
+        <div id="header"><h2><a href="user-home.php">Diet Buddy</a></h2> <a href="admin-home.php">Go to User Home</a></div>
+
+            <div id="body">
+            <table >
+                <tr>
+                    <td><center><b><font color="blue">Name</font></b></center></td>
+                    <td><center><b><font color="blue">Contact Number</font></b></center></td>
+                    <td><center><b><font color="blue">Email</font></b></center></td>
+                    <td><center><b><font color="blue">Gender</font></b></center></td>
+                    <td><center><b><font color="blue">Age</font></b></center></td>
+                </tr>
+                <?php
+                    $q=$db->query("SELECT * FROM user_registration where gender='male'");
+                    while($r1=$q->fetch(PDO::FETCH_OBJ))
+                    {
+                        ?>
+                        <tr>
+                            <td><center><?= $r1->name; ?></center></td>
+                            <td><center><?= $r1->cno; ?></center></td>
+                            <td><center><?= $r1->email; ?></center></td>
+                            <td><center><?= $r1->gender; ?></center></td>
+                            <td><center><?= $r1->age; ?></center></td>
+                        </tr>
+                <?php
+                    }       
+                ?>
+            </table>
+            </div>
+
+        <div id="footer" height='70px'><h4 align="center"> Copyright Diet Buddy</h4>
+                <p align="center"> <a href="index.php">Logout </a> </p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+count-calorie code
+
+
+
+<?php
+    include('connection.php');
+    session_start();
+
+?>
+
+
+<!DOCTYPE html>
+ <html>
+ <head>
+<title>Food List</title>
+<link rel="stylesheet" type="text/css" href="css/s1.css">
+    <style type="text/css">
+        td{
+            width : 200px;
+            height : 50px;
+        }
+    </style>
+
+
+ </head>
+
+ 
+ <body>
+
+<div id="full">
+
+    <div id="inner_full">
+
+        <div id="header"><h2><a href="user-home.php">Diet Buddy</a></h2></div>
+
+            <div id="body">
+                <br>
+                <?php
+                    $un=$_SESSION['un'];
+                    if(!$un)
+                    {
+                        header("Location:index.php");
+                    }
+                ?>
+                <h1>Food List</h1><br>
+                <center>
+                    <div id="form">
+                        <form method="POST" action="">
+                            <label for="search">Search Food:</label>
+                            <input type="text" id="search" name="fsearch" placeholder="Enter food name">
+                            <button type="submit" name="sub" >Search</button>
+                        </form>
+                        <table>
+                            <tr>
+                                <td><center><b><font color="blue">Food Image</font></b></center></td>
+                                <td><center><b><font color="blue">Food Name</font></b></center></td>
+                                <td><center><b><font color="blue">Food Category</font></b></center></td>
+                                <td><center><b><font color="blue">Food Calories</font></b></center></td>
+                                <td><center><b><font color="blue">Food Carbs</font></b></center></td>
+                                <td><center><b><font color="blue">Food Fat</font></b></center></td>
+                                <td><center><b><font color="blue">Food Protein</font></b></center></td>
+                                <td><center><b><font color="blue">Doctor Fiber</font></b></center></td>
+                            </tr>
+                            
+                            <?php
+                        // if(isset($_POST['sub']))
+                        {
+                            $fsearch=$_POST['fsearch'];
+                            // $q=$db->prepare(" SELECT * FROM food_item where fname='fname' ");
+                            // $q->bindValue('fname',$fname);
+                            //  if($q->execute())
+                            // {
+                            //     echo "<script>alert('Food Searched Successfully')</script>";
+                            // }
+                            // else{
+                            //     echo "<script>alert('User Registration fail')</script>";
+                            // }
+                        }
+                    ?>
+                            
+                            <?php
+                                // $fname=$_POST['fname'];
+                                $q=$db->query("SELECT * FROM food_item where fname='fsearch' ");
+                                while($r1=$q->fetch(PDO::FETCH_OBJ))
+                                {
+                                    ?>
+                                    <tr>
+                                        <td><center><?= $r1->fimage; ?></center></td>
+                                        <td><center><?= $r1->fname; ?></center></td>
+                                        <td><center><?= $r1->fcategory; ?></center></td>
+                                        <td><center><?= $r1->fcalories; ?></center></td>
+                                        <td><center><?= $r1->fcarbs; ?></center></td>
+                                        <td><center><?= $r1->ffat; ?></center></td>
+                                        <td><center><?= $r1->fprotein; ?></center></td>
+                                        <td><center><?= $r1->ffiber; ?></center></td>
+                                    </tr>
+                            <?php
+                                }       
+                            ?>
+                        </table>
+               
+                    </div>
+                </center>
+
+        <div id="footer" height='70px'><h4 align="center"> Copyright Diet Buddy</h4>
+                <p align="center"> <a href="index.php">Logout </a> </p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+    include('connection.php');
+    session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Food List</title>
+    <link rel="stylesheet" type="text/css" href="css/s1.css">
+    <style type="text/css">
+        td {
+            width: 200px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="full">
+        <div id="inner_full">
+            <div id="header"><h2><a href="admin-home.php">Diet Buddy</a></h2></div>
+            <div id="body">
+                <br>
+                <?php
+                    $un = $_SESSION['un'];
+                    if (!$un) {
+                        header("Location:index.php");
+                    }
+                ?>
+                <h1>Food List</h1><br>
+                <center>
+                    <div id="form">
+                        <form method="GET" action="">
+                            <label for="search">Search Food:</label>
+                            <input type="text" id="search" name="fsearch" placeholder="Enter food name">
+                            <button type="submit" name="sub">Search</button>
+                        </form>
+
+                        <table>
+                            <tr>
+                                <td><center><b><font color="blue">Food Image</font></b></center></td>
+                                <td><center><b><font color="blue">Food Name</font></b></center></td>
+                                <td><center><b><font color="blue">Food Category</font></b></center></td>
+                                <td><center><b><font color="blue">Food Calories</font></b></center></td>
+                                <td><center><b><font color="blue">Food Carbs</font></b></center></td>
+                                <td><center><b><font color="blue">Food Fat</font></b></center></td>
+                                <td><center><b><font color="blue">Food Protein</font></b></center></td>
+                                <td><center><b><font color="blue">Doctor Fiber</font></b></center></td>
+                            </tr>
+                            
+                            <?php
+                                if (isset($_GET['sub'])) {
+                                    $fsearch = $_GET['fsearch'];
+                                    $q = $db->prepare("SELECT * FROM food_item WHERE fcategory LIKE :fsearch");
+                                    $q->bindValue(':fsearch', '%' . $fsearch . '%', PDO::PARAM_STR);
+                                    $q->execute();
+
+                                    while ($r1 = $q->fetch(PDO::FETCH_OBJ)) {
+                                        ?>
+                                        <tr>
+                                            <td><center><?= $r1->fimage; ?></center></td>
+                                            <td><center><?= $r1->fname; ?></center></td>
+                                            <td><center><?= $r1->fcategory; ?></center></td>
+                                            <td><center><?= $r1->fcalories; ?></center></td>
+                                            <td><center><?= $r1->fcarbs; ?></center></td>
+                                            <td><center><?= $r1->ffat; ?></center></td>
+                                            <td><center><?= $r1->fprotein; ?></center></td>
+                                            <td><center><?= $r1->ffiber; ?></center></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                }
+                            ?>
+                        </table>
+                    </div>
+                </center>
+
+                <div id="footer" height='70px'>
+                    <h4 align="center"> Copyright Diet Buddy</h4>
+                    <p align="center"> <a href="index.php">Logout </a> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+user-list.php
+
+
+<?php
+    // include('connection.php');
+    // session_start();
+?>
+<!--
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Donor Registration</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffcc80; 
+        }
+
+        #full {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #inner_full {
+            width: 80%;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        #header {
+            background-color: #ff8c00; 
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #d17f00; 
+        }
+
+        #header h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #fff;
+        }
+
+        #body {
+            background-color: #fff;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        #body h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #form {
+            width: 80%;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ff8c00; 
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ff8c00;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #f0f0f0;
+        }
+
+        #footer {
+            background-color: #ff8c00;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #d17f00; 
+        }
+
+        #footer h4 {
+            margin: 0;
+            color: #fff;
+        }
+
+        #footer a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        #footer a:hover {
+            color: #f0f0f0; 
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="full">
+
+        <div id="inner_full">
+
+            <div id="header">
+                <h2><a href="admin-home.php">Blood Bank Management System</a></h2>
+            </div>
+
+            <div id="body">
+                <br>
+                <?php
+                    // $un=$_SESSION['un'];
+                    // if(!$un)
+                    // {
+                    //     header("Location:index.php");
+                    // }
+                ?>
+                <h1>Welcome Home</h1><br>
+                <center>
+                    <div id="form">
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Contact Number</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>Age</th>
+                            </tr>
+                            <?php
+                                // $q=$db->query("SELECT * FROM user_registration ");
+                                // while($r1=$q->fetch(PDO::FETCH_OBJ))
+                                // {
+                                    ?>
+                                    <tr>
+                                        <td><?=
+                                            // $r1->name; 
+                                        ?></td>
+                                        <td><?=
+                                        //  $r1->cno;
+                                          ?></td>
+                                        <td><?=
+                                        //  $r1->email; 
+                                         ?></td>
+                                        <td><?=
+                                        //  $r1->gender; 
+                                         ?></td>
+                                        <td><?=
+                                        //  $r1->age; 
+                                         ?></td>
+                                    </tr>
+                            <?php
+                                // }       
+                            ?>
+                        </table>
+                    </div>
+                </center>
+            </div>
+
+            <div id="footer">
+                <h4 align="center">Copyright Diet Buddy</h4>
+                <p align="center"><a href="index.php">Logout</a></p>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html> -->
+
+
+
+
+
+
+<?php
+    include('connection.php');
+    session_start();
+?>
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        #full {
+            display: flex;
+            flex: 1;
+        }
+
+        #sidebar {
+            flex-basis: 20%;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        #sidebar.closed {
+            width: 0;
+            overflow: hidden;
+        }
+
+        #sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #ecf0f1;
+        }
+
+        #sidebar a {
+            text-decoration: none;
+            color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            width: 100%;
+            text-align: center;
+            display: block;
+        }
+
+        #sidebar a:hover {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        #content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        #header {
+            background-color: #ff8c00;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #e67e22;
+        }
+
+        #header h2 {
+            margin: 0;
+            font-size: 28px;
+            color: #fff;
+        }
+
+        #header a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        #header a:hover {
+            color: #d35400;
+        }
+
+        #body {
+            background-color: #ffecb3;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        #body h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #e67e22;
+        }
+
+        #footer {
+            background-color: #ff8c00;
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #e67e22;
+            margin-top: auto;
+        }
+
+        #footer h4 {
+            margin: 0;
+            color: #fff;
+        }
+
+        #footer a {
+            text-decoration: none;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        #footer a:hover {
+            color: #d35400;
+        }
+
+        #toggle-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        #toggle-btn:hover {
+            color: #d35400;
+        }
+
+
+
+        #form {
+            width: 80%;
+            margin: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ff8c00; /* Set table border color to orange */
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #ff8c00;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #f0f0f0; /* Set alternate row background color to a lighter shade */
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="full">
+
+        <div id="sidebar">
+            <h2><a href="admin-home.php" style="color: #ecf0f1;">Diet Buddy</a></h2>
+            <a href="user-home.php">Go to User Home</a>
+            <?php
+                $un = $_SESSION['un'];
+                if (!$un) {
+                    header("Location:index.php");
+                }
+            ?>
+            <a href="user-list.php">User List</a>
+            <a href="add-dietplan.php">Add Diet Plan</a>
+            <a href="dietplan-list.php">Diet Plan List</a>
+            <a href="doctor-registration.php">Doctor Registration</a>
+            <a href="add-food.php">Add Food and Calorie</a>
+            <a href="#">Add Exercise</a>
+            <a href="doctor-list.php">Doctor List</a>
+            <a href="food-list.php">Food and Calorie List</a>
+            <a href="#">Exercise List</a>
+        </div>
+
+        <div id="content">
+            <div id="header">
+                <h2><a href="admin-home.php">Diet Buddy</a></h2>
+                <a href="user-home.php">Go to User Home</a>
+            </div>
+
+            <div id="body">
+                <h1>Welcome Home Admin</h1>
+                <!-- Your content goes here -->
+                
+                  <center>
+                    <div id="form">
+                        <table>
+                            <tr>
+                                <td><center><b><font color="blue">Food Image</font></b></center></td>
+                                <td><center><b><font color="blue">Food Name</font></b></center></td>
+                                <td><center><b><font color="blue">Food Category</font></b></center></td>
+                                <td><center><b><font color="blue">Food Calories</font></b></center></td>
+                                <td><center><b><font color="blue">Food Carbs</font></b></center></td>
+                                <td><center><b><font color="blue">Food Fat</font></b></center></td>
+                                <td><center><b><font color="blue">Food Protein</font></b></center></td>
+                                <td><center><b><font color="blue">Doctor Fiber</font></b></center></td>
+                            </tr>
+                            <?php
+                                $q=$db->query("SELECT * FROM food_item ");
+                                while($r1=$q->fetch(PDO::FETCH_OBJ))
+                                {
+                                    ?>
+                                    <tr>
+                                        <td><center><?= $r1->fimage; ?></center></td>
+                                        <td><center><?= $r1->fname; ?></center></td>
+                                        <td><center><?= $r1->fcategory; ?></center></td>
+                                        <td><center><?= $r1->fcalories; ?></center></td>
+                                        <td><center><?= $r1->fcarbs; ?></center></td>
+                                        <td><center><?= $r1->ffat; ?></center></td>
+                                        <td><center><?= $r1->fprotein; ?></center></td>
+                                        <td><center><?= $r1->ffiber; ?></center></td>
+                                    </tr>
+
+                            <?php
+                                }       
+                            ?>
+                   
+                   
+                        </table>
+                    </div>
+                </center>
+
+            </div>
+
+            <div id="footer">
+                <h4>Copyright Diet Buddy</h4>
+                <p><a href="index.php">Logout</a></p>
+            </div>
+        </div>
+
+        <div id="toggle-btn" onclick="toggleSidebar()">☰</div>
+
+        <script>
+            function toggleSidebar() {
+                document.getElementById('sidebar').classList.toggle('closed');
+            }
+        </script>
+
+    </div>
+
+</body>
+
+</html>
